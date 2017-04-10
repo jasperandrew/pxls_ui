@@ -1,8 +1,10 @@
 # pxls.space UI
 
-# changelog
+The updated version of the UI code for pxls.space.
 
-4/8/17
+## changelog
+
+*4/8/17*
 - mod override is active by default when page loads
 - palette visual upgrades
   - background for easier viewing
@@ -24,4 +26,4 @@
 - can save snapshots with "P"
 - mod panel pops out of the side of the screen
 
-4/9/17
+*4/9/17*
