@@ -178,10 +178,9 @@ window.App = {
 
       if(oldScale !== this.scale){
 
-        if(this.scale > 15){
+        if(this.scale > 15 || this.color == -1){
           this.elements.cursor.hide();
-        }
-        if(this.scale <= 15 && this.elements.reticule.css("background-color") !== "rgba(0, 0, 0, 0)"){
+        }else if(this.elements.reticule.css("background-color") !== "rgba(0, 0, 0, 0)"){
           this.elements.cursor.show();
         }
 
@@ -405,16 +404,16 @@ window.App = {
 
       $(".palette-color").css("cursor", "not-allowed");
 
-      document.title = "Pxls.space [" + minuteStr + ":" + secsStr + "]";
+      document.title = "pxls.space [" + minuteStr + ":" + secsStr + "]";
     } else {
       if (!this.hasFiredNotification) {
-        new Notification("Pxls.space", {
+        new Notification("pxls.space", {
           body: "Your next pixel is available!"
         });
         this.hasFiredNotification = true;
       }
 
-      document.title = "Pxls.space";
+      document.title = "pxls.space";
       this.elements.timer.hide();
       $(".palette-color").css("cursor", "")
     }

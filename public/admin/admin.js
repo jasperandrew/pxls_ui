@@ -1,5 +1,4 @@
 var App = window.App;
-
 App.attemptPlace_ = App.attemptPlace;
 App.attemptPlace = function(x, y) {
   var oldColor = App.color;
@@ -12,23 +11,18 @@ App.attemptPlace = function(x, y) {
 
 $("<link/>", {rel: "stylesheet", href: "/admin/admin.css"}).appendTo(document.head);
 
-var adminRoot = $("<div></div>").addClass("ui").appendTo(document.body);
+var adminRoot = $("<div></div>").appendTo(document.body);
 
-var adminPanel = $("<div></div>").addClass("admin").appendTo(adminRoot);
+var adminPanel = $("<div></div>").addClass("admin panel").appendTo(adminRoot);
 $("<h1/>").text("MOD").appendTo(adminPanel);
 
-var handReset = $("<input/>", {type: 'checkbox', id: 'admin-hr', checked: 'checked'}).appendTo(adminPanel);
+var handReset = $("<input/>", {type: 'checkbox', id: 'admin-hr'}).appendTo(adminPanel);
 $("<label/>", {for: 'admin-hr', text: 'Disable hand reset'}).appendTo(adminPanel);
 
 $("<br/>").appendTo(adminPanel);
 
-var cooldownOverride = $("<input/>", {type: 'checkbox', id: 'admin-co', checked: 'checked'}).appendTo(adminPanel);
-$("<label/>", {for: 'admin-co', text: "Override cooldown"}).appendTo(adminPanel);
-
-var adminCDOverride = function() {
+var cooldownOverride = $("<input/>", {type: 'checkbox', id: 'admin-co'}).appendTo(adminPanel).click(function() {
   var state = cooldownOverride.prop("checked");
   App.socket.send(JSON.stringify({type: "admin_cdoverride", override: state}));
-};
-
-cooldownOverride.onclick = adminCDOverride;
-window.onload = adminCDOverride;
+});
+$("<label/>", {for: 'admin-co', text: "Override cooldown"}).appendTo(adminPanel);
