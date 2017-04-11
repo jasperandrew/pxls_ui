@@ -33,6 +33,7 @@ The updated version of the UI code for pxls.space.
 - alert looks like an alert
 - spruced up the signup page
 - moar zooms
+- fixed centerOn for url coord links
 
 ## To-do
 - mobile styles
