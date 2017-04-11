@@ -341,26 +341,59 @@ a, a:hover, a:visited, a:active {
     background-color: white;
 }
 
-.signup-container {
-    padding: 32px;
+.signup .signup-container {
+  padding: 30px 30px 70px;
+  border-radius: 7px;
+  background-color: #eee;
+  color: #333;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  width: 50%;
 
-    max-width: 800px;
-
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 64px auto auto;
+  position: absolute;
+  top: 30vh;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
-.username {
-    padding: 8px;
-    width: 100%;
-    margin-bottom: 16px;
+.signup .signup-container h1 {
+  margin-top: 0;
 }
 
-.error {
-    color: red;
+.signup .signup-container h1 small {
+  display: block;
 }
+
+.signup .signup-container input[type="submit"] {
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.signup .signup-container input[type="submit"]:hover {
+  color: #fff;
+  background: #4ebf62;
+}
+
+.signup .username {
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.signup .error {
+  color: #ff0000;
+  font-weight: 700;
+}
+
+/*.signup .error::before {
+  content: "Error: ";
+}*/
 
 
 /*//////////////////////////*\

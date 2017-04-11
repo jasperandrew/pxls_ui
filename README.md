@@ -31,6 +31,7 @@ The updated version of the UI code for pxls.space.
 - moved timer to overlay color palette
 - login overlay looks nicer
 - alert looks like an alert
+- spruced up the signup page
 
 ## To-do
 - mobile styles
