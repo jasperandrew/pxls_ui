@@ -32,6 +32,7 @@ The updated version of the UI code for pxls.space.
 - login overlay looks nicer
 - alert looks like an alert
 - spruced up the signup page
+- moar zooms
 
 ## To-do
 - mobile styles

@@ -159,19 +159,23 @@ window.App = {
     this.elements.boardContainer.on("wheel", function (evt) {
       var oldScale = this.scale;
       if (evt.originalEvent.deltaY > 0) {
-        if(oldScale <= 2){
+        if(oldScale <= 1){
+          this.scale = 0.5;
+        }else if(oldScale <= 2){
           this.scale = 1;
         }else{
           this.scale = Math.round(Math.max(2, this.scale/1.25));
         }
       } else {
-        if(oldScale == 1){
+        if(oldScale == 0.5){
+          this.scale = 1;
+        }else if(oldScale == 1){
           this.scale = 2;
         }else{
           this.scale = Math.round(Math.min(50, this.scale*1.25));
         }
       }
-      console.log(this.scale);
+
       if(oldScale !== this.scale){
 
         if(this.scale > 15){
