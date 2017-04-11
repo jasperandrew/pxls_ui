@@ -5,7 +5,6 @@ The updated version of the UI code for pxls.space.
 ## changelog
 
 ### 4/8/17
-- mod override is active by default when page loads
 - palette visual upgrades
   - background for easier viewing
   - palette tiles pop up on hover
