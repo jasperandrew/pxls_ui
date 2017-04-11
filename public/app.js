@@ -31,7 +31,8 @@ window.App = {
     alert: $(".message"),
     coords: $(".coords"),
     users: $(".online"),
-    grid: $(".grid")
+    grid: $(".grid"),
+    loginOverlay: $(".login-overlay")
   },
   panX: 0,
   panY: 0,
@@ -65,6 +66,14 @@ window.App = {
     this.width = data.width;
     this.height = data.height;
     this.palette = data.palette;
+
+    if (data.captchaKey) {
+      $(".g-recaptcha").attr("data-sitekey", data.captchaKey);
+
+      var script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      document.head.appendChild(script);
+    }
 
     this.initPalette();
 
@@ -143,17 +152,26 @@ window.App = {
       } else if (evt.keyCode === 68 || evt.keyCode === 39) {
         this.panX -= 100 / this.scale;
       }
+
       this.updateTransform();
     }.bind(this));
 
     this.elements.boardContainer.on("wheel", function (evt) {
       var oldScale = this.scale;
       if (evt.originalEvent.deltaY > 0) {
-        this.scale = Math.round(Math.max(1, this.scale/1.5));
+        if(oldScale <= 2){
+          this.scale = 1;
+        }else{
+          this.scale = Math.round(Math.max(2, this.scale/1.25));
+        }
       } else {
-        this.scale = Math.round(Math.min(45, this.scale*1.5));
+        if(oldScale == 1){
+          this.scale = 2;
+        }else{
+          this.scale = Math.round(Math.min(50, this.scale*1.25));
+        }
       }
-
+      console.log(this.scale);
       if(oldScale !== this.scale){
 
         if(this.scale > 15){
@@ -184,7 +202,7 @@ window.App = {
       var dx = Math.abs(downX - evt.clientX);
       var dy = Math.abs(downY - evt.clientY);
 
-      if (dx < 5 && dy < 5 && this.color !== -1 && this.cooldown < new Date().getTime()) {
+      if (dx < 5 && dy < 5 && this.color !== -1 && this.cooldown < new Date().getTime() && evt.button === 0) {
         var pos = this.screenToBoardSpace(evt.clientX, evt.clientY);
         this.attemptPlace(pos.x | 0, pos.y | 0);
       }
@@ -241,7 +259,7 @@ window.App = {
       var data = JSON.parse(msg.data);
 
       if (data.type === "pixel") {
-        data.pixels.forEach(function(px) {
+        data.pixels.forEach(function (px) {
           var ctx = this.elements.board[0].getContext("2d");
           ctx.fillStyle = this.palette[px.color];
           ctx.fillRect(px.x, px.y, 1, 1);
@@ -259,7 +277,7 @@ window.App = {
         if (data.success) {
           var pending = this.pendingPixel;
           this.switchColor(pending.color);
-          this.attemptPlace(pending.x, pending.y)
+          this.attemptPlace(pending.x, pending.y);
         } else {
           alert("Failed captcha verification")
         }
@@ -267,8 +285,11 @@ window.App = {
         this.elements.users.fadeIn(200);
         this.elements.users.text(data.count + " online");
       } else if (data.type === "session_limit") {
-        ws.onclose = function(){};
+        ws.onclose = function(){
+        };
         this.alert("Too many sessions open, try closing some tabs.");
+      } else if (data.type === "login") {
+        this.elements.loginOverlay.hide();
       }
     }.bind(this);
     ws.onclose = function () {
@@ -305,17 +326,19 @@ window.App = {
     });
   },
   updateTransform: function () {
+    this.panX = Math.min(this.width / 2, Math.max(-this.width / 2, this.panX));
+    this.panY = Math.min(this.height / 2, Math.max(-this.height / 2, this.panY));
+
     this.elements.boardMover
-    .css("width", this.width + "px")
-    .css("height", this.height + "px")
-    .css("transform", "translate(" + this.panX + "px, " + this.panY + "px)");
+      .css("width", this.width + "px")
+      .css("height", this.height + "px")
+      .css("transform", "translate(" + this.panX + "px, " + this.panY + "px)");
     this.elements.boardZoomer.css("transform", "scale(" + this.scale + ")");
     this.elements.reticule.css("width", (this.scale+1) + "px").css("height", (this.scale+1) + "px");
 
-    var xx = this.screenToBoardSpace(0, 0);
-    this.elements.grid
-    .css("background-size", this.scale + "px " + this.scale + "px")
-    .css("transform", "translate(" + Math.floor((-xx.x % 1) * this.scale) + "px," + Math.floor((-xx.y % 1) * this.scale) + "px)");
+    var a = this.screenToBoardSpace(0, 0);
+    this.elements.grid.css("background-size", this.scale + "px " + this.scale + "px").css("transform", "translate(" + Math.floor(-a.x % 1 * this.scale) + "px," + Math.floor(-a.y % 1 * this.scale) + "px)");
+    this.elements.grid.css("opacity", (this.scale - 2) / 6);
   },
   screenToBoardSpace: function (screenX, screenY) {
     var boardBox = this.elements.board[0].getBoundingClientRect();
@@ -330,8 +353,8 @@ window.App = {
     return {x: x, y: y};
   },
   centerOn: function (x, y) {
-    this.panX = (500 - x) - 0.5;
-    this.panY = (500 - y) - 0.5;
+    this.panX = (this.width - x) - 0.5;
+    this.panY = (this.height - y) - 0.5;
     this.updateTransform();
   },
   switchColor: function (newColor) {
@@ -389,6 +412,9 @@ window.App = {
       document.title = "Pxls.space";
       this.elements.timer.hide();
       $(".palette-color").css("cursor", "")
+    }
+    if (this.status) {
+      this.elements.timer.text(this.status);
     }
   },
   saveImage: function () {

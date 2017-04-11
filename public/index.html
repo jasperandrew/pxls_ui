@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pxls.space</title>
+  <title>pxls.space</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/favicon.ico" type="image/x-icon" >
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
 
   <script>
@@ -20,9 +19,35 @@
   ga('send', 'pageview');
 
   </script>
+
+  <script src="//blockr.io/js_external/coinwidget/coin.js"></script>
+  <script>
+      CoinWidgetCom.go({
+          wallet_address: '1H8tA9gjWT23edDAUTY1dY6C8Hd3j7n2zk',
+          currency: 'bitcoin',
+          counter: 'count',
+          lbl_button: 'Donate',
+          lbl_count: 'donations',
+          lbl_amount: 'BTC',
+          lbl_address: 'Use address below to donate. Thanks!',
+          qrcode: true,
+          alignment: 'bl',
+          decimals: 8,
+          size: "small",
+          color: "dark",
+          countdownFrom: "0",
+          element: "#coinwidget-bitcoin-1H8tA9gjWT23edDAUTY1dY6C8Hd3j7n2zk",
+          onShow: function(){},
+          onHide: function(){}
+      });
+  </script>
+
 </head>
 <body>
   <div class="loading"><span>Loading...</span></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="reticule" id="reticule"></div>
+  <div class="message"><span class="text"></span> <span class="close">OK</span></div>
 
   <div class="board-container">
     <div class="grid"></div>
@@ -38,6 +63,7 @@
       <h1>Information</h1>
       <a href="http://reddit.com/r/pxlsspace">Subreddit</a>
       <a href="https://discord.gg/YzmZBRY">Discord</a>
+      <a href="https://twitter.com/pxls_space">Twitter</a>
       <a href="https://kms-hosting.com/">Sponsored by kms-hosting</a>
     </div>
     <div>
@@ -63,20 +89,22 @@
         name="submit" alt="PayPal - The safer, easier way to pay online!">
         <img alt="" border="0" src="https://www.paypalobjects.com/da_DK/i/scr/pixel.gif" width="1" height="1">
       </form>
+      <div id="coinwidget-bitcoin-1H8tA9gjWT23edDAUTY1dY6C8Hd3j7n2zk"></div>
     </div>
     <div class="open">info</div>
   </div>
 
   <div class="ui" id="ui">
-    <div class="cooldown-timer"></div>
-    <div class="message"><span class="text"></span> <span class="close">❌</span></div>
-    <div class="palette"></div>
+    <div>
+      <div class="login-overlay">
+          You are not signed in. Sign in with <a href="/signin/reddit">Reddit</a> or <a href="/signin/google">Google</a>.
+      </div>
+      <div class="cooldown-timer"></div>
+      <div class="palette"></div>
+    </div>
     <div class="coords"></div>
     <div class="online"></div>
   </div>
-
-  <div class="cursor" id="cursor"></div>
-  <div class="reticule" id="reticule"></div>
 
   <div class="g-recaptcha"
   data-sitekey="6LcXjRsUAAAAAKeMTmvc090tFfxO15eQN23VE-go"

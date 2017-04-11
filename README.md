@@ -26,4 +26,11 @@ The updated version of the UI code for pxls.space.
 - can save snapshots with "P"
 - mod panel pops out of the side of the screen
 
-### 4/9/17
+### 4/10/17
+- updated to new version
+- moved timer to overlay color palette
+- login overlay looks nicer
+- alert looks like an alert
+
+## To-do
+- mobile styles
