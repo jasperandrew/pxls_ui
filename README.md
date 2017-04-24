@@ -4,7 +4,7 @@ The updated version of the UI code for pxls.space.
 
 ## changelog
 
-### 4/8/17
+### 8/4/17
 - palette visual upgrades
   - background for easier viewing
   - palette tiles pop up on hover
@@ -25,7 +25,7 @@ The updated version of the UI code for pxls.space.
 - can save snapshots with "P"
 - mod panel pops out of the side of the screen
 
-### 4/10/17
+### 10/4/17
 - updated to new version
 - moved timer to overlay color palette
 - login overlay looks nicer
@@ -34,5 +34,11 @@ The updated version of the UI code for pxls.space.
 - moar zooms
 - fixed centerOn for url coord links
 
+### 24/4/17
+- readability improvement to admin.js HTML strings
+- fixed mod panel label
+
 ## To-do
 - mobile styles
+- mod lookups popup on pixel
+- make coords set to location on page load
